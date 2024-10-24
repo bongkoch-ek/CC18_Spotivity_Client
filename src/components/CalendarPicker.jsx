@@ -13,9 +13,8 @@ import {
 
 
 export default function CalendarPicker(props) {
-  const {setDate, date} = props
+  const {setDate, date } = props
   // const [date, setDate] = React.useState(new Date())
-  // console.log(date)
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -33,7 +32,7 @@ export default function CalendarPicker(props) {
       <PopoverContent className="flex w-auto flex-col space-y-2 p-2">
         <div className="rounded-md border">
           <Calendar mode="single" selected={date} onSelect={setDate} 
-                    disabled={(date) => date <  new Date(new Date().setDate(new Date().getDate()-1)) }
+                    disabled={(date) => date <  new Date(new Date()) }
                     />
         </div>
       </PopoverContent>

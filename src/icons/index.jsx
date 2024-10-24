@@ -47,3 +47,23 @@ export function SearchIcon(props) {
         </svg>
     )
 }
+
+export function DeleteIcon(props) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+      >
+        <g
+          stroke="#EB3223"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M4 7h16M6 7v11a3 3 0 003 3h6a3 3 0 003-3V7M9 5a2 2 0 012-2h2a2 2 0 012 2v2H9V5z" />
+        </g>
+      </svg>
+    )
+  }
