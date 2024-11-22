@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { create } from 'zustand'
+const URL = import.meta.env.VITE_API_URL
 
 const useActivityStore = create((set, get) => ({
     activity: [],
@@ -10,7 +11,7 @@ const useActivityStore = create((set, get) => ({
     bookmarkList: [],
     getAllActivity: async () => {
         set({ loading: true })
-        const rs = await axios.get('http://localhost:8000/activity')
+        const rs = await axios.get(`${URL}/activity`)
         set({ activity: rs.data.result, loading: false })
         return rs.data.result
     },
@@ -22,7 +23,7 @@ const useActivityStore = create((set, get) => ({
     },
     createActivity: async (body, token, user) => {
         set({ loading: true })
-        const rs = await axios.post('http://localhost:8000/activity/create', body, {
+        const rs = await axios.post(`${URL}/activity/create`, body, {
             headers: { Authorization: `Bearer ${token}` }
         })
         set({ loading: false })
@@ -30,7 +31,7 @@ const useActivityStore = create((set, get) => ({
     },
     getActivityByUserId: async (token) => {
         set({ loading: true })
-        const rs = await axios.get('http://localhost:8000/activity/getActivityByUserId', {
+        const rs = await axios.get(`${URL}/activity/getActivityByUserId`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         set({ ownList: rs.data.result, loading: false })
@@ -38,14 +39,14 @@ const useActivityStore = create((set, get) => ({
     },
     editActivity: async (body, token) => {
         set({ loading: true })
-        const rs = await axios.patch('http://localhost:8000/activity/edit', body, {
+        const rs = await axios.patch(`${URL}/activity/edit`, body, {
             headers: { Authorization: `Bearer ${token}` }
         })
         console.log(rs)
         set({ loading: false })
     },
     deleteActivity: async (token, id) => {
-        const rs = await axios.delete(`http://localhost:8000/activity/delete/${id}`, {
+        const rs = await axios.delete(`${URL}/activity/delete/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         console.log(rs)
@@ -55,7 +56,7 @@ const useActivityStore = create((set, get) => ({
     },
     getJoinList: async (token) => {
         set({ loading: true })
-        const rs = await axios.get('http://localhost:8000/activity/join', {
+        const rs = await axios.get(`${URL}/activity/join`, {
             headers: { Authorization: `Bearer ${token}` }
         })
 
@@ -64,14 +65,14 @@ const useActivityStore = create((set, get) => ({
     },
     joinActivity: async (token, id) => {
         set({ loading: true })
-        const rs = await axios.post(`http://localhost:8000/activity/join/${id}`, {}, {
+        const rs = await axios.post(`${URL}/activity/join/${id}`, {}, {
             headers: { Authorization: `Bearer ${token}` }
         })
         set({ loading: false })
         return rs.data.result
     },
     cancelJoin: async (token, id) => {
-        const rs = await axios.delete(`http://localhost:8000/activity/join/${id}`, {
+        const rs = await axios.delete(`${URL}/activity/join/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         console.log(rs.data)
@@ -82,7 +83,7 @@ const useActivityStore = create((set, get) => ({
     },
     getBookmarkList: async (token) => {
         set({ loading: true })
-        const rs = await axios.get('http://localhost:8000/activity/bookmark', {
+        const rs = await axios.get(`${URL}/activity/bookmark`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         // const time = setTimeout(() => {
@@ -94,14 +95,14 @@ const useActivityStore = create((set, get) => ({
     },
     bookmarkActivity: async (token, id) => {
         set({ loading: true })
-        const rs = await axios.post(`http://localhost:8000/activity/bookmark/${id}`, {}, {
+        const rs = await axios.post(`${URL}/activity/bookmark/${id}`, {}, {
             headers: { Authorization: `Bearer ${token}` }
         })
         set({ loading: false })
         return rs.data.result
     },
     cancelBookmark: async (token, id) => {
-        const rs = await axios.delete(`http://localhost:8000/activity/bookmark/${id}`, {
+        const rs = await axios.delete(`${URL}/activity/bookmark/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         set(state => ({
@@ -111,13 +112,13 @@ const useActivityStore = create((set, get) => ({
     },
     search: async (text) => {
         set({ loading: true })
-        const rs = await axios.get(`http://localhost:8000/activity/search?search=${text}`)
+        const rs = await axios.get(`${URL}/activity/search?search=${text}`)
         set({ activity: rs.data.result, loading: false })
         return rs.data.result
     },
     typeSearch: async (id) => {
         set({ loading: true })
-        const rs = await axios.get(`http://localhost:8000/activity/search/${id}`)
+        const rs = await axios.get(`${URL}/activity/search/${id}`)
         console.log(rs)
         set({ activity: rs.data.result, loading: false })
         return rs.data.result
