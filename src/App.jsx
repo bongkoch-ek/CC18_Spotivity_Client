@@ -4,12 +4,13 @@ import AppRouter from './routers/AppRouter'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
+// import REACT_APP_GOOGLE_MAP_KEY = 
 
 function App() {
-  const googleKey = globalThis.REACT_APP_GOOGLE_MAP_KEY
+  const googleKey = import.meta.env.VITE_GOOGLE_MAP_KEY
   return (
     <>
-      <APIProvider apiKey={"AIzaSyDUAh9fZ3Cx2lcC1UKSxRHc0xQ23L_HhkU"}>
+      <APIProvider apiKey={googleKey}>
         <AppRouter />
         <ToastContainer />
       </APIProvider>

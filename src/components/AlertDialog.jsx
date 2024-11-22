@@ -13,10 +13,11 @@ import {
 import { useNavigate } from 'react-router-dom'
 import useUserStore from '../stores/userStore'
 import useActivityStore from '../stores/activityStore'
+import { Success } from '../icons'
 
 
 export default function Modal(props) {
-    const { from, txtTitle, isOpen, txtDetail, body } = props
+    const { from, txtTitle, isOpen, txtDetail, body, setJoin ,activityId} = props
     const [open, setOpen] = useState(isOpen)
     const navigate = useNavigate()
 
@@ -26,13 +27,21 @@ export default function Modal(props) {
 
 
     async function hdlOnClick() {
-        setOpen(false)
-        if (from === "REGISTER") {
-            navigate("/login")
+        try {
+            setOpen(false)
+            if (from === "REGISTER") {
+                navigate("/login")
+            }
+            else if (from === "CREATE") {
+                navigate("/activity")
+            }
+            
+        } catch (err) {
+            const errMsg = err.response?.data?.message || err.message
+            console.log(errMsg)
+            toast.error(errMsg)
         }
-        else if (from === "CREATE") {
-            navigate("/activity")
-        }
+
     }
 
     function hdlCanCel() {
@@ -43,19 +52,18 @@ export default function Modal(props) {
         <AlertDialog open={open}>
             <AlertDialogContent >
                 <AlertDialogHeader>
-                    <AlertDialogTitle>
+                    <AlertDialogTitle className="text-3xl text-center">
                         <p className='items-center text-center'>
                             {txtTitle}
                         </p>
                     </AlertDialogTitle>
-                    <AlertDialogDescription>
+                    <AlertDialogDescription className="text-lg text-center align-middle items-center flex flex-col justify-center">
+                        <Success className='w-32 h-32 p-5'/>
                         {txtDetail}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    {/* {
-                        from == 'CREATE' && <button onClick={hdlCanCel} className='mr-2 px-2 py-1 rounded-3xl hover:text-[#b0cbcb] hover:underline  '>cancel</button>
-                    } */}
+                    
                     <button className='rounded-3xl bg-[#005657] text-white px-4 py-2 font-medium hover:bg-[#004d4e]' onClick={hdlOnClick}> OK </button>
                 </AlertDialogFooter>
             </AlertDialogContent>

@@ -67,3 +67,38 @@ export function DeleteIcon(props) {
       </svg>
     )
   }
+
+ export function Question(props) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+      >
+        <circle cx={12} cy={12} r={10} stroke="#005657" strokeWidth={1.5} />
+        <path
+          d="M10.125 8.875a1.875 1.875 0 112.828 1.615c-.475.281-.953.708-.953 1.26V13"
+          stroke="#005657"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+        />
+        <circle cx={12} cy={16} r={1} fill="#005657" />
+      </svg>
+    )
+  }
+
+ export function Success(props) {
+    return (
+      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path
+          d="M213.333 0C95.513 0 0 95.513 0 213.333s95.513 213.334 213.333 213.334 213.334-95.513 213.334-213.334C426.667 95.513 331.154 0 213.333 0zm0 384c-94.105 0-170.666-76.561-170.666-170.667 0-94.105 76.56-170.666 170.666-170.666S384 119.227 384 213.333 307.439 384 213.333 384zm80.336-246.886l30.167 30.167L192 299.67l-79.083-79.083 30.166-30.167L192 239.336l101.67-102.222z"
+          transform="translate(42.667 42.667)"
+          fill="#005657"
+          stroke="none"
+          strokeWidth={1}
+          fillRule="evenodd"
+        />
+      </svg>
+    )
+  }

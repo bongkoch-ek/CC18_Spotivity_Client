@@ -241,9 +241,7 @@ export default function CreateActivity() {
 
             {
                 confirm && <Modal from="CREATE" txtTitle="SUCCESS" isOpen={true}
-                    txtDetail={`Create activity success. 
-                You won't be able to make any changes within 1 hour before the start time. 
-                If you need to edit the information, you can go to Profile > History > Hosting.`} />
+                    txtDetail={`Create activity success. `} />
             }
 
 

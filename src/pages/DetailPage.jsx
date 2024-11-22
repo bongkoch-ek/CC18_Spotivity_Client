@@ -1,11 +1,23 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { BookmarkDark, BookmarkLight, SearchIcon } from '../icons';
+import { BookmarkDark, BookmarkLight, Question, SearchIcon } from '../icons';
 import { Badge } from "@/components/ui/badge"
 import MapCard from '../components/MapCard';
 import useActivityStore from '../stores/activityStore';
 import useUserStore from '../stores/userStore';
 import { toast } from 'react-toastify';
+import Modal from '../components/AlertDialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export default function detailPage() {
 
@@ -15,19 +27,28 @@ export default function detailPage() {
   const joinActivity = useActivityStore(state => state.joinActivity)
   const cancelBookmark = useActivityStore(state => state.cancelBookmark)
   const bookmarkActivity = useActivityStore(state => state.bookmarkActivity)
-  const getAllActivity= useActivityStore(state => state.getAllActivity)
+  const getAllActivity = useActivityStore(state => state.getAllActivity)
   const token = useUserStore(state => state.token)
   const user = useUserStore(state => state.user)
-  
+
+  const [confirm, setConfirm] = useState(false)
+
   const isJoin = () => activity.join.findIndex(el => el.userId === user?.id) !== -1
   const isBookmark = () => activity.bookmark.findIndex(el => el.userId === user?.id) !== -1
-  const [bookmark,setBookmark] = useState(isBookmark())
-  const [join,setJoin] = useState(isJoin())
+  const [bookmark, setBookmark] = useState(isBookmark())
+  const [join, setJoin] = useState(isJoin())
+  const [test, setTest] = useState(false)
 
   console.log(activity)
+
   async function hdlJoin(e) {
+    setConfirm(true)
+
+    // setJoin(true)
+  }
+
+  async function hdlSubmit() {
     try {
-      e.stopPropagation()
       if (!user) {
         navigate("/login")
       }
@@ -37,10 +58,13 @@ export default function detailPage() {
         toast.success("join success!")
       }
       getAllActivity()
+      setTest(true)
     } catch (err) {
       const errMsg = err.response?.data?.message || err.message
       console.log(errMsg)
       toast.error(errMsg)
+    } finally {
+      setConfirm(false)
     }
   }
 
@@ -68,6 +92,11 @@ export default function detailPage() {
       console.log(errMsg)
       toast.error(errMsg)
     }
+  }
+
+
+  function hdlCanCel() {
+    setConfirm(false)
   }
 
   let formattedJson = JSON.parse(activity.description);
@@ -103,12 +132,12 @@ export default function detailPage() {
                 <button className=' bg-[#D9D9D9] text-white text-center py-3 px-10 rounded-3xl' disabled >join</button>
                 :
                 (
-                  activity.quantity == activity.amount ?       
-                   <button className=' bg-[#D9D9D9] text-white text-center py-3 px-10 rounded-3xl' disabled >join</button>
-                  :
-                  <button className='bg-[#00898d] text-white text-center py-3 px-10 rounded-3xl font-semibold' onClick={hdlJoin}>join</button>
-              )
-                // <button className='bg-[#00898d] text-white text-center py-3 px-10 rounded-3xl font-semibold' onClick={hdlJoin}>join</button>
+                  (activity.quantity == activity.amount) && !activity.isUnLimit ?
+                    <button className=' bg-[#D9D9D9] text-white text-center py-3 px-10 rounded-3xl' disabled >join</button>
+                    :
+                    <button className='bg-[#00898d] text-white text-center py-3 px-10 rounded-3xl font-semibold' onClick={hdlJoin}>join</button>
+                )
+              // <button className='bg-[#00898d] text-white text-center py-3 px-10 rounded-3xl font-semibold' onClick={hdlJoin}>join</button>
             }
 
           </div>
@@ -127,10 +156,52 @@ export default function detailPage() {
 
         <div className='w-[30%]'>
           <MapCard activity={activity} />
+
         </div>
 
-
       </div>
+      <div className=' w-full mt-5'>
+        <p className='font-semibold text-lg'>Member</p>
+        <div className='flex gap-3'>
+
+          {
+            activity?.join.map(el => (<div className='flex flex-col justify-center items-center'>
+              <img src="https://picsum.photos/100" className='rounded-full h-14 w-14 items-center' />
+              <p>{el.User.username}</p>
+            </div>
+            ))
+          }
+          {
+            test &&<div className='flex flex-col justify-center items-center'>
+            <img src="https://picsum.photos/100" className='rounded-full h-14 w-14 items-center' />
+            <p>{user.username}</p>
+          </div>
+          }
+        </div>
+      </div>
+
+
+      {
+        confirm &&
+        <AlertDialog open={confirm}>
+          <AlertDialogTrigger asChild>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-3xl text-center">Confirm</AlertDialogTitle>
+              <AlertDialogDescription className="text-lg text-center align-middle items-center flex flex-col justify-center">
+                <Question className='w-32 h-32 p-5' />
+                confirm to join this activity?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <button onClick={hdlCanCel} className='mr-2 px-2 py-1 rounded-3xl hover:text-[#b0cbcb] hover:underline  '>cancel</button>
+              <button className='rounded-3xl bg-[#005657] text-white px-4 py-2 font-medium hover:bg-[#004d4e]' onClick={hdlSubmit}> OK </button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      }
+
 
     </div>
   )

@@ -39,15 +39,15 @@ export default function Activity_box(props) {
 
     async function hdlJoin(e) {
         try {
-            e.stopPropagation()
-            if (!user) {
-                navigate("/login")
-            }
-            else {
-                await joinActivity(token, activity.id)
-                toast.success("join success!")
-            }
-            getAllActivity()
+            // e.stopPropagation()
+            // if (!user) {
+            //     navigate("/login")
+            // }
+            // else {
+            //     await joinActivity(token, activity.id)
+            //     toast.success("join success!")
+            // }
+            // getAllActivity()
         } catch (err) {
             const errMsg = err.response?.data?.message || err.message
             console.log(errMsg)
