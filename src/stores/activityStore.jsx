@@ -17,7 +17,7 @@ const useActivityStore = create((set, get) => ({
     },
     getActivityType: async () => {
         set({ loading: true })
-        const rs = await axios.get('http://localhost:8000/activity/getType')
+        const rs = await axios.get(`${URL}/activity/getType`)
         set({ type: rs.data.result, loading: false })
         return rs.data.result
     },
