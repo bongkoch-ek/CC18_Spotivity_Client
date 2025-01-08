@@ -39,15 +39,16 @@ export default function ActivityPage() {
 
   async function typeChange(e) {
     setType(e.target.value)
-    console.log(e.target.value)
     await typeSearch(e.target.value)
   }
-  
+
 
   return (
     <div className='flex flex-col w-full justify-center items-center pt-5 mb-5'>
 
-
+      {
+        loading && <LoadingPage/>
+      }
       <div className=" flex items-center gap-2 w-full justify-center mb-5">
         <input type="text" placeholder={`search here`} className=' w-3/5 border py-2 px-5 rounded-3xl' onChange={(e) => hdlSearch(e.target.value)} />
       </div>
@@ -64,7 +65,7 @@ export default function ActivityPage() {
         </select>
         <button className='hover:underline' onClick={hdlReset}>reset filter</button>
       </div>
-     
+
       <div className='w-4/5 h-full flex flex-col justify-center items-center'>
         {
           activity.length !== 0 ?

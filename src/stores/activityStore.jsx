@@ -13,6 +13,7 @@ const useActivityStore = create((set, get) => ({
         set({ loading: true })
         const rs = await axios.get(`${URL}/activity`)
         set({ activity: rs.data.result, loading: false })
+        console.log(rs)
         return rs.data.result
     },
     getActivityType: async () => {
@@ -46,12 +47,14 @@ const useActivityStore = create((set, get) => ({
         set({ loading: false })
     },
     deleteActivity: async (token, id) => {
+        set({ loading: true})
         const rs = await axios.delete(`${URL}/activity/delete/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         console.log(rs)
         set(state => ({
-            ownList: state.ownList.filter(el => el.id !== id)
+            ownList: state.ownList.filter(el => el.id !== id),
+            loading: false
         }))
     },
     getJoinList: async (token) => {

@@ -117,7 +117,7 @@ export default function detailPage() {
               <img src="https://picsum.photos/100" alt="user_profile" className='w-10 h-10 rounded-full' />
               <div>
                 <p className=''>host by </p>
-                <p className='font-medium'>{activity.User.username}</p>
+                <p className='font-medium'>{activity.user.username}</p>
               </div>
             </div>
           </div>
@@ -167,15 +167,15 @@ export default function detailPage() {
           {
             activity?.join.map(el => (<div className='flex flex-col justify-center items-center'>
               <img src="https://picsum.photos/100" className='rounded-full h-14 w-14 items-center' />
-              <p>{el.User.username}</p>
+              <p>{el.user.username}</p>
             </div>
             ))
           }
           {
-            test &&<div className='flex flex-col justify-center items-center'>
-            <img src="https://picsum.photos/100" className='rounded-full h-14 w-14 items-center' />
-            <p>{user.username}</p>
-          </div>
+            test && <div className='flex flex-col justify-center items-center'>
+              <img src="https://picsum.photos/100" className='rounded-full h-14 w-14 items-center' />
+              <p>{user.username}</p>
+            </div>
           }
         </div>
       </div>

@@ -30,7 +30,7 @@ export default function Activity_box(props) {
     }
 
     function hdlDetailClick() {
-        if (activity.User.username == user?.username) {
+        if (activity.user.username == user?.username) {
             navigate('/edit-activity', { state: activity })
         }
         else
@@ -95,7 +95,7 @@ export default function Activity_box(props) {
                     {/* <p className='text-[#726E69]'> 8 interest</p> */}
                 </div>
 
-                <p className='text-[#726E69]'>{activity.User.username}</p>
+                <p className='text-[#726E69]'>{activity.user.username}</p>
                 <p className='font-medium text-start'>{description(JSON.parse(activity.description))}</p>
 
                 <div className='flex flex-row justify-between mt-5 w-full'>
@@ -110,7 +110,7 @@ export default function Activity_box(props) {
 
                     <div className='flex gap-5'>
                         {
-                            !(activity.User.username == user?.username)
+                            !(activity.user.username == user?.username)
                             &&
                             <button className='w-10 h-10' onClick={hdlBookmark}>
                                 {
@@ -121,7 +121,7 @@ export default function Activity_box(props) {
                         }
 
                         {
-                            (activity.User.username == user?.username) ?
+                            (activity.user.username == user?.username) ?
                                 <button className=' bg-[#b0cbcb] text-white text-center py-2 px-7 rounded-3xl' >edit</button>
                                 :
                                 (
